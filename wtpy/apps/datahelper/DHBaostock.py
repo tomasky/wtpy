@@ -108,7 +108,7 @@ class DHBaostock(BaseDataHelper):
         elif period == "min5":
             freq = '5'
             filetag = 'm5'
-            fields = "date,time,open,high,low,close,volume,amount"
+            fields = "date,time,open,high,low,close,volume,isST"
         else:
             raise Exception("Baostock has only bars of frequency day and min5")
 
