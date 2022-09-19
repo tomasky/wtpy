@@ -1316,7 +1316,7 @@ def funds_analyze(workbook:Workbook, df_funds:df, capital = 5000000, rf = 0, per
     #每日净值
     ayNetVals = (ayBal/init_capital)
     
-    ar = math.pow(ayNetVals.iloc[-1], annual_days/days) - 1       #年化收益率=总收益率^(年交易日天数/统计天数)
+    ar = math.pow(ayNetVals.iloc[-1], int(annual_days/days)) - 1       #年化收益率=总收益率^(年交易日天数/统计天数)
     ayDailyReturn = ayBal/ayPreBal-1 #每日收益率
     delta = fmtNAN(ayDailyReturn.std(axis=0)*math.pow(annual_days,0.5),0)       #年化标准差=每日收益率标准差*根号下(年交易日天数)
     down_delta = fmtNAN(ayDailyReturn[ayDailyReturn<0].std(axis=0)*math.pow(annual_days,0.5), 0)    #下行标准差=每日亏损收益率标准差*根号下(年交易日天数)
@@ -1575,6 +1575,8 @@ class WtBtAnalyst:
             print("start PnL analyzing for strategy %s……" % (sname))
 
             df_funds = pd.read_csv(os.path.join(folder, "funds.csv"))
+            if len(df_funds) == 0:
+                return
             print("fund logs loaded……")
 
             init_capital = sInfo["cap"]
