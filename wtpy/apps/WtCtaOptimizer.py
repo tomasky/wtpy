@@ -224,7 +224,8 @@ class WtCtaOptimizer:
         folder = "./outputs_bt/%s/" % (strName)
         df_closes = pd.read_csv(folder + "closes.csv")
         df_funds = pd.read_csv(folder + "funds.csv")
-
+        if len(df_funds) == 0:
+            return
         df_wins = df_closes[df_closes["profit"]>0]
         df_loses = df_closes[df_closes["profit"]<=0]
 
@@ -290,7 +291,7 @@ class WtCtaOptimizer:
         summary["交易净盈亏"] = float(trdnetprofit)
         summary["逐笔胜率%"] = winrate*100
         summary["逐笔平均盈亏"] = avgprof
-        summary["逐笔平均净盈亏"] = accnetprofit/totaltimes
+        summary["逐笔平均净盈亏"] = accnetprofit/totaltimes if totaltimes>0 else 0
         summary["逐笔平均盈利"] = avgprof_win
         summary["逐笔逐笔亏损"] = avgprof_lose
         summary["逐笔盈亏比"] = winloseratio
