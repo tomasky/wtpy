@@ -138,7 +138,7 @@ class DHBaostock(BaseDataHelper):
                     items[1] = time[:2]+":"+time[2:4]+":"+time[4:]
                 content += ",".join(items) + "\n"
 
-            filename = "%s.%s_%s.csv" % (exchg, code[3:], filetag)
+            filename = "%s.STK.%s_%s.csv" % (exchg, code[3:], filetag)
             filepath = os.path.join(folder, filename)
             logging.info("Writing bars into file %s..." % (filepath))
             f = open(filepath, "w", encoding="utf-8")
