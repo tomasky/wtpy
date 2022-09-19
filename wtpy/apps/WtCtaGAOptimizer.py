@@ -360,7 +360,8 @@ class WtCtaGAOptimizer:
         except Exception as e:  # 如果读取csv文件出现异常，则按文本格式读取
             df_closes = read_closes(folder + "closes.csv")
             df_funds = read_funds(folder + "funds.csv")
-
+        if len(df_funds) == 0:
+            return
         df_wins = df_closes[df_closes["profit"] > 0]
         df_loses = df_closes[df_closes["profit"] <= 0]
 
@@ -426,7 +427,7 @@ class WtCtaGAOptimizer:
         summary["交易净盈亏"] = float(trdnetprofit)
         summary["逐笔胜率%"] = winrate*100
         summary["逐笔平均盈亏"] = avgprof
-        summary["逐笔平均净盈亏"] = accnetprofit/totaltimes
+        summary["逐笔平均净盈亏"] = accnetprofit/totaltimes if totaltimes > 0 else 0
         summary["逐笔平均盈利"] = avgprof_win
         summary["逐笔逐笔亏损"] = avgprof_lose
         summary["逐笔盈亏比"] = winloseratio
