@@ -129,6 +129,7 @@ class DHBaostock(BaseDataHelper):
                 logging.error("Error occured: %s" % (rs.error_msg))
                 continue
 
+            items = None
             while rs.next():
                 items = rs.get_row_data().copy()
                 if isDay:
@@ -137,7 +138,8 @@ class DHBaostock(BaseDataHelper):
                     time = items[1][-9:-3]
                     items[1] = time[:2]+":"+time[2:4]+":"+time[4:]
                 content += ",".join(items) + "\n"
-
+            if items == None:
+                continue
             filename = "%s.STK.%s_%s.csv" % (exchg, code[3:], filetag)
             filepath = os.path.join(folder, filename)
             logging.info("Writing bars into file %s..." % (filepath))
